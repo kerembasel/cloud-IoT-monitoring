@@ -13,13 +13,12 @@ spec:
     spec:
       containers:
       - name: api
-        image: iot-api:1               # Bu imajı minikube içine "load" edeceğiz
+        image: iot-api:1               
         ports:
         - containerPort: 5000
         env:
         - name: MONGO_URI
           value: "mongodb://mongo:27017/"
-        # Uygulama ayakta mı? (hazırlık ve canlılık kontrolleri)
         readinessProbe:
           httpGet: { path: "/", port: 5000 }
           initialDelaySeconds: 5
