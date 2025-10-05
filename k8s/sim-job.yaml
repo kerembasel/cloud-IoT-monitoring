@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: iot-sim
+  namespace: iot
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure   # hata olursa yeniden dene
+      containers:
+      - name: sim
+        image: iot-sim:1         # Bu imaj da minikube'a yüklenecek
+        env:
+        - name: API_URL
+          value: "http://iot-api.iot.svc.cluster.local:5000/data"
+          # Service'in tam DNS adı: <svc>.<ns>.svc.cluster.local:port
