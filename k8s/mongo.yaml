@@ -1,16 +1,14 @@
-# --- PersistentVolumeClaim: Mongo verisini kalıcı tutar
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mongo-pvc
   namespace: iot
 spec:
-  accessModes: ["ReadWriteOnce"]     # tek node'a RW erişim
+  accessModes: ["ReadWriteOnce"]    
   resources:
     requests:
-      storage: 1Gi                   # min. 1Gi disk iste
+      storage: 1Gi                  
 ---
-# --- MongoDB Deployment: 1 replika yeterli
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -31,13 +29,12 @@ spec:
         - containerPort: 27017
         volumeMounts:
         - name: data
-          mountPath: /data/db          # Mongo'nun data dizini
+          mountPath: /data/db          
       volumes:
       - name: data
         persistentVolumeClaim:
           claimName: mongo-pvc
 ---
-# --- ClusterIP Service: iot namespace içinde "mongo" DNS adıyla ulaş
 apiVersion: v1
 kind: Service
 metadata:
